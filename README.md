@@ -1,6 +1,8 @@
 # project
 
 > A Vue.js project
+> 基于vue构建的多页面项目框架
+> pages文件夹下为项目的入口文件和项目页面对应的文件夹
 
 ## Build Setup
 
