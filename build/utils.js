@@ -83,88 +83,31 @@ var merge = require('webpack-merge')
 //多入口配置
 // 通过glob模块读取pages文件夹下的所有对应文件夹下的js后缀文件，如果该文件存在
 // 那么就作为入口处理
-// exports.entries = function() {
-//     var entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
-//     var map = {}
-//     entryFiles.forEach((filePath) => {
-//         var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
-//         map[filename] = filePath
-//     })
-//     console.log(map);
-//     return map
-// }
-// //多页面输出配置
-// // 与上面的多页面入口配置相同，读取pages文件夹下的对应的html后缀文件，然后放入数组中
-// exports.htmlPlugin = function() {
-//     let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
-//     let arr = []
-//     entryHtml.forEach((filePath) => {
-//         let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
-//         let conf = {
-//             // 模板来源
-//             template: filePath,
-//             // 文件名称
-//             filename: filename + '.html',
-//             // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
-//             chunks: ['manifest', 'vendor', filename],
-//             inject: true
-//         }
-//         if (process.env.NODE_ENV === 'production') {
-//             conf = merge(conf, {
-//                 minify: {
-//                     removeComments: true,
-//                     collapseWhitespace: true,
-//                     removeAttributeQuotes: true
-//                 },
-//                 chunksSortMode: 'dependency'
-//             })
-//         }
-//         arr.push(new HtmlWebpackPlugin(conf))
-//     })
-//     console.log(arr);
-//     return arr
-// }
-
-
-var entriesJs = function(globPath) {
-    var entries = {},
-        basename, tmp, pathname;
-    if (typeof(globPath) != "object") {
-        globPath = [globPath]
+var entriesJs = function() {
+        var entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
+        var map = {}
+        entryFiles.forEach((filePath) => {
+            var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+            map[filename] = filePath
+        })
+        return map
     }
-    globPath.forEach((itemPath) => {
-        glob.sync(itemPath).forEach(function(entry) {
-            basename = path.basename(entry, path.extname(entry));
-            if (entry.split('/').length > 6) { // 判断多页面文件夹下面是否有入口文件
-                tmp = entry.split('/').splice(-3);
-                pathname = tmp.splice(0, 1) + '/' + basename; // 正确输出js和html的路径
-                entries[pathname] = entry;
-                console.log('pathname:' + pathname)
-            } else {
-                entries[basename] = entry;
-                console.log('basename:' + basename)
-            }
-        });
-    });
-    return entries;
-}
-
-//多页面输出配置
-// 与上面的多页面入口配置相同，读取pages文件夹下的对应的html后缀文件，然后放入数组中
+    //多页面输出配置
+    // 与上面的多页面入口配置相同，读取pages文件夹下的对应的html后缀文件，然后放入数组中
 var pluginHtml = function() {
-    let pages = entriesJs([PAGE_PATH + '/*.html', PAGE_PATH + '/*/*.html']); // 获得入口html文件
+    let entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
     let arr = []
-    for (var pathname in pages) {
-        // 配置生成的html文件，定义路径等
+    entryHtml.forEach((filePath) => {
+        let filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
         let conf = {
-            filename: pathname + '.html',
-            template: pages[pathname], // 模板路径
-            inject: true, // js插入位置
-            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            chunks: ['manifest', 'vendor', pathname],
-            chunksSortMode: 'dependency',
-            hush: true
-        };
+            // 模板来源
+            template: filePath,
+            // 文件名称
+            filename: filename + '.html',
+            // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
+            chunks: ['manifest', 'vendor', filename],
+            inject: true
+        }
         if (process.env.NODE_ENV === 'production') {
             conf = merge(conf, {
                 minify: {
@@ -176,8 +119,63 @@ var pluginHtml = function() {
             })
         }
         arr.push(new HtmlWebpackPlugin(conf))
-    }
+    })
     return arr
 }
+
+
+// var entriesJs = function(globPath) {
+//     var entries = {},
+//         basename, tmp, pathname;
+//     if (typeof(globPath) != "object") {
+//         globPath = [globPath]
+//     }
+//     globPath.forEach((itemPath) => {
+//         glob.sync(itemPath).forEach(function(entry) {
+//             basename = path.basename(entry, path.extname(entry));
+//             if (entry.split('/').length > 6) { // 判断多页面文件夹下面是否有入口文件
+//                 tmp = entry.split('/').splice(-3);
+//                 pathname = tmp.splice(0, 1) + '/' + basename; // 正确输出js和html的路径
+//                 entries[pathname] = entry;
+//                 console.log('pathname:' + pathname)
+//             } else {
+//                 entries[basename] = entry;
+//                 console.log('basename:' + basename)
+//             }
+//         });
+//     });
+//     return entries;
+// }
+
+// //多页面输出配置
+// // 与上面的多页面入口配置相同，读取pages文件夹下的对应的html后缀文件，然后放入数组中
+// var pluginHtml = function() {
+//     let pages = entriesJs([PAGE_PATH + '/*.html', PAGE_PATH + '/*/*.html']); // 获得入口html文件
+//     let arr = []
+//     for (var pathname in pages) {
+//         // 配置生成的html文件，定义路径等
+//         let conf = {
+//             filename: pathname + '.html',
+//             template: pages[pathname], // 模板路径
+//             inject: true, // js插入位置
+//             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+//             chunks: ['manifest', 'vendor', pathname],
+//             chunksSortMode: 'dependency',
+//             hush: true
+//         };
+//         if (process.env.NODE_ENV === 'production') {
+//             conf = merge(conf, {
+//                 minify: {
+//                     removeComments: true,
+//                     collapseWhitespace: true,
+//                     removeAttributeQuotes: true
+//                 },
+//                 chunksSortMode: 'dependency'
+//             })
+//         }
+//         arr.push(new HtmlWebpackPlugin(conf))
+//     }
+//     return arr
+// }
 exports.entries = entriesJs([PAGE_PATH + '/*.js', PAGE_PATH + '/*/*.js']); // 获得入口js文件
 exports.htmlPlugin = pluginHtml(); // 获得入口html文件
