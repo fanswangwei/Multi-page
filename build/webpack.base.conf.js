@@ -9,7 +9,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-    entry: utils.entries(),
+    entry: utils.entries,
     output: {
         path: config.build.assetsRoot,
         filename: '[name].js',
