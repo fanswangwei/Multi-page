@@ -18,16 +18,16 @@
                     <div class="navigation">
                         <ul class="menu">
                             <li><a href="index.html">首页</a></li>
-                            <li>
+                            <li v-on:mouseenter="hoverEnter('about')" v-on:mouseleave="hoverleave('about')">
                                 <a href="#">关于我</a>
-                                <ul style="display: none;">
+                                <ul v-show="showHide.about">
                                     <li><a href="about.html">个人简介</a></li>
                                     <li><a href="listpic.html">个人相册</a></li>
                                 </ul>
                             </li>
-                            <li>
+                            <li v-on:mouseenter="hoverEnter('diary')" v-on:mouseleave="hoverleave('diary')">
                                 <a href="#">我的日记</a>
-                                <ul style="display: block; visibility: hidden;">
+                                <ul v-show="showHide.myDiary">
                                     <li><a href="newslistpic.html">个人日记</a></li>
                                     <li><a href="newslistpic.html">学习笔记</a></li>
                                 </ul>
@@ -43,7 +43,33 @@
 </template>
 
 <script>
+export default{
+    data(){
+        return{
+            showHide: {
+                about: false,
+                myDiary: false
+            }
 
+        }
+    },
+    methods: {
+        hoverleave(status){
+            if(status == 'about'){
+                this.showHide.about = false;
+            }else if(status == 'diary'){
+                this.showHide.myDiary = false;
+            }
+        },
+        hoverEnter(status){
+            if(status == 'about'){
+                this.showHide.about = true;
+            }else if(status == 'diary'){
+                this.showHide.myDiary = true;
+            }
+        }
+    }
+}
 
 </script>
 
@@ -171,7 +197,7 @@ nav {
     z-index: 300;
 }
 .menu li ul {
-    display: none;
+    /* display: none; */
     width: 110px;
     position: absolute;
     TOP: 40px;

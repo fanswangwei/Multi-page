@@ -84,7 +84,6 @@ export default {
         getArticleList(){
             this.$http.get('/static/data/articleList.json').then(result => {
                 this.articleList = result.body;
-                console.log(this.articleList)
             })
         },
         getImgArticle(){
@@ -94,7 +93,6 @@ export default {
             }
             this.$http.get('/static/data/imgArticle.json', {param: params}).then( result => {
                 this.imgArticleList = result.body;
-                console.log(this.imgArticleList)
             })
         }
     }
