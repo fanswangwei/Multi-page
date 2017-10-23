@@ -51,7 +51,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="ad"> <img src="/static/images/03.jpg"> </div>
+                <div class="ad"><img src="./../../assets/images/03.jpg"> </div>
             </div>
         </div>
         <hello-footer/>
@@ -82,7 +82,7 @@ export default {
     },
     methods:{
         getArticleList(){
-            this.$http.get('/static/data/articleList.json').then(result => {
+            this.$http.get('/static/data/ArticleList.json').then(result => {
                 this.articleList = result.body;
             })
         },
@@ -93,6 +93,7 @@ export default {
             }
             this.$http.get('/static/data/imgArticle.json', {param: params}).then( result => {
                 this.imgArticleList = result.body;
+                console.log(this.imgArticleList);
             })
         }
     }
@@ -114,7 +115,7 @@ li {
     text-align: -webkit-match-parent;
 }
 #app .jztop {
-    background: url('/static/images/jztop.png') no-repeat;
+    background: url('./../../assets/images/jztop.png') no-repeat;
     width: 1034px;
     margin: auto;
     height: 32px;
@@ -171,7 +172,7 @@ a.readmore {
     clear: both;
     margin: 10px 0 0 0;
     display: inline-block;
-    background: #f6f6f6 url('/static/images/time.jpg') 15px center no-repeat;
+    background: #f6f6f6 url('./../../assets/images/time.jpg') 15px center no-repeat;
     line-height: 26px;
     font-size: 13px;
     height: 26px;
@@ -196,7 +197,7 @@ a.readmore {
     color: #fff;
     font-size: 18px;
     height: 44px;
-    background: url('/static/images/rtitbg.png') no-repeat;
+    background: url('./../../assets/images/rtitbg.png') no-repeat;
     padding-left: 40px;
     margin: 0 0 10px 0;
 }
@@ -210,7 +211,7 @@ a.readmore {
     float: left;
 }
 .gzwm .tel {
-    background: url('/static/images/gz01.png') no-repeat;
+    background: url('./../../assets/images/gz01.png') no-repeat;
 }
 .gzwm li a {
     color: #747F8C;
@@ -221,13 +222,13 @@ a.readmore {
     float: left;
 }
 .gzwm .email {
-    background: url('/static/images/gz02.png') no-repeat;
+    background: url('./../../assets/images/gz02.png') no-repeat;
 }
 .gzwm .qq {
-    background: url('/static/images/gz03.png') no-repeat;
+    background: url('./../../assets/images/gz03.png') no-repeat;
 }
 .gzwm .prize {
-    background: url('/static/images/gz04.png') no-repeat;
+    background: url('./../../assets/images/gz04.png') no-repeat;
 }
 .tuwen {
     width: 100%;
@@ -263,11 +264,11 @@ a.readmore {
     margin-right: 10px;
 }
 .tulanmu {
-    background: url('/static/images/lanmbq.png') no-repeat center left;
+    background: url('./../../assets/images/lanmbq.png') no-repeat center left;
     padding-left: 17px;
 }
 .tutime {
-    background: url('/static/images/datepng.png') no-repeat left center;
+    background: url('./../../assets/images/datepng.png') no-repeat left center;
     padding-left: 15px;
 }
 .ph {
@@ -283,7 +284,7 @@ a.readmore {
     padding-left: 5px;
     overflow: hidden;
     padding-left: 15px;
-    background: url('/static/images/libg.jpg') no-repeat left center;
+    background: url('./../../assets/images/libg.jpg') no-repeat left center;
 }
 .rank li:first-child a {
     color: #f00;
