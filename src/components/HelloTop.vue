@@ -28,11 +28,11 @@
                             <li v-on:mouseenter="hoverEnter('diary')" v-on:mouseleave="hoverleave('diary')">
                                 <a href="#">我的日记</a>
                                 <ul v-show="showHide.myDiary">
-                                    <li><a href="newslistpic.html">个人日记</a></li>
-                                    <li><a href="newslistpic.html">学习笔记</a></li>
+                                    <li><a href="newslist.html">个人日记</a></li>
+                                    <li><a href="newslist.html">学习笔记</a></li>
                                 </ul>
                             </li>
-                            <li><a href="newslistpic.html">技术文章</a> </li>
+                            <li><a href="newslist.html">技术文章</a> </li>
                             <li><a href="#">给我留言</a> </li>
                         </ul>
                     </div>

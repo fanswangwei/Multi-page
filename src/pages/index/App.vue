@@ -101,14 +101,8 @@ export default {
 </script>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-}
-a:link, a:visited, a:active {
-    text-decoration: none;
-    color: #000000;
-}
+@import './../../assets/css/base.css';
+
 li {
     list-style: none;
     display: list-item;
